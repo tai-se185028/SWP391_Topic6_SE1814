@@ -12,6 +12,8 @@ export default function App() {
         <Route path="/register" element={<RegistrationForm />} />
         <Route path="/vehicles" element={< Vehicles />} />
         <Route path="/vehicle/:id" element={<Vehicle />} />
+
+        ssssssssssss
       </Routes>
     </BrowserRouter>
   );
