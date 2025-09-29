@@ -13,19 +13,19 @@ export default function Navbar({ username }) {
         <nav className="flex items-center justify-between bg-gray-900 px-6 py-3 text-white">
             {/* Left Side Menu */}
             <div className="flex space-x-6">
-                <Link to="/xe-cua-ban" className="hover:text-gray-300">
+                <Link to="/vehicles" className="hover:text-gray-300">
                     Xe của bạn
                 </Link>
-                <Link to="/dat-lich" className="hover:text-gray-300">
+                <Link to="/schedule" className="hover:text-gray-300">
                     Đặt lịch
                 </Link>
-                <Link to="/lich-su" className="hover:text-gray-300">
+                <Link to="/usageHistory" className="hover:text-gray-300">
                     Lịch sử
                 </Link>
-                <Link to="/thong-bao" className="hover:text-gray-300">
+                <Link to="/notifycaition" className="hover:text-gray-300">
                     Thông báo
                 </Link>
-                <Link to="/ho-tro" className="hover:text-gray-300">
+                <Link to="/support" className="hover:text-gray-300">
                     Hỗ trợ
                 </Link>
             </div>

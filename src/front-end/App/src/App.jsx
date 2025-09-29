@@ -1,6 +1,8 @@
 import React from "react";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import RegistrationForm from "./pages/Registration";
+import Vehicles from "./pages/Vehicles";
+import Vehicle from "./pages/Vehicle";
 
 export default function App() {
   return (
@@ -8,6 +10,8 @@ export default function App() {
 
       <Routes>
         <Route path="/register" element={<RegistrationForm />} />
+        <Route path="/vehicles" element={< Vehicles />} />
+        <Route path="/vehicle/:id" element={<Vehicle />} />
       </Routes>
     </BrowserRouter>
   );
