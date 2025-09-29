@@ -8,13 +8,17 @@ export default function RegistrationForm() {
     confirmPassword: "",
     cccd: "",
     license: "",
-    cccdFile: null,
-    licenseFile: null,
+    cccdFront: null,
+    cccdBack: null,
+    licenseFront: null,
+    licenseBack: null,
+    bankName: "",
+    bankNumber: "",
   });
 
   const [errors, setErrors] = useState({});
 
-  // Validation rules (Vietnamese messages)
+  // Validation rules
   const validateField = (name, value) => {
     let error = "";
     switch (name) {
@@ -36,11 +40,23 @@ export default function RegistrationForm() {
       case "license":
         if (!value.trim()) error = "Số giấy phép lái xe là bắt buộc";
         break;
-      case "cccdFile":
-        if (!value) error = "Vui lòng tải lên ảnh căn cước";
+      case "cccdFront":
+        if (!value) error = "Vui lòng tải ảnh CCCD mặt trước";
         break;
-      case "licenseFile":
-        if (!value) error = "Vui lòng tải lên ảnh bằng lái";
+      case "cccdBack":
+        if (!value) error = "Vui lòng tải ảnh CCCD mặt sau";
+        break;
+      case "licenseFront":
+        if (!value) error = "Vui lòng tải ảnh bằng lái mặt trước";
+        break;
+      case "licenseBack":
+        if (!value) error = "Vui lòng tải ảnh bằng lái mặt sau";
+        break;
+      case "bankName":
+        if (!value.trim()) error = "Tên ngân hàng là bắt buộc";
+        break;
+      case "bankNumber":
+        if (!/^[0-9]{8,20}$/.test(value)) error = "Số tài khoản không hợp lệ";
         break;
       default:
         break;
@@ -90,8 +106,12 @@ export default function RegistrationForm() {
       confirmPassword: "",
       cccd: "",
       license: "",
-      cccdFile: null,
-      licenseFile: null,
+      cccdFront: null,
+      cccdBack: null,
+      licenseFront: null,
+      licenseBack: null,
+      bankName: "",
+      bankNumber: "",
     });
     setErrors({});
   };
@@ -110,7 +130,7 @@ export default function RegistrationForm() {
         <h2>Đăng ký</h2>
 
         {/* Full Name */}
-        <label style={{ display: "block", marginTop: "10px" }}>Họ tên</label>
+        <label>Họ tên</label>
         <input
           type="text"
           name="fullName"
@@ -118,10 +138,10 @@ export default function RegistrationForm() {
           onChange={handleChange}
           style={{ borderColor: errors.fullName ? "red" : "#ccc", width: "100%" }}
         />
-        {errors.fullName && <p style={{ color: "red", fontSize: "12px" }}>{errors.fullName}</p>}
+        {errors.fullName && <p style={{ color: "red" }}>{errors.fullName}</p>}
 
         {/* Phone */}
-        <label style={{ display: "block", marginTop: "10px" }}>Số điện thoại</label>
+        <label>Số điện thoại</label>
         <input
           type="tel"
           name="phone"
@@ -129,10 +149,10 @@ export default function RegistrationForm() {
           onChange={handleChange}
           style={{ borderColor: errors.phone ? "red" : "#ccc", width: "100%" }}
         />
-        {errors.phone && <p style={{ color: "red", fontSize: "12px" }}>{errors.phone}</p>}
+        {errors.phone && <p style={{ color: "red" }}>{errors.phone}</p>}
 
         {/* Password */}
-        <label style={{ display: "block", marginTop: "10px" }}>Mật khẩu</label>
+        <label>Mật khẩu</label>
         <input
           type="password"
           name="password"
@@ -140,10 +160,10 @@ export default function RegistrationForm() {
           onChange={handleChange}
           style={{ borderColor: errors.password ? "red" : "#ccc", width: "100%" }}
         />
-        {errors.password && <p style={{ color: "red", fontSize: "12px" }}>{errors.password}</p>}
+        {errors.password && <p style={{ color: "red" }}>{errors.password}</p>}
 
         {/* Confirm Password */}
-        <label style={{ display: "block", marginTop: "10px" }}>Nhập lại mật khẩu</label>
+        <label>Nhập lại mật khẩu</label>
         <input
           type="password"
           name="confirmPassword"
@@ -151,12 +171,10 @@ export default function RegistrationForm() {
           onChange={handleChange}
           style={{ borderColor: errors.confirmPassword ? "red" : "#ccc", width: "100%" }}
         />
-        {errors.confirmPassword && (
-          <p style={{ color: "red", fontSize: "12px" }}>{errors.confirmPassword}</p>
-        )}
+        {errors.confirmPassword && <p style={{ color: "red" }}>{errors.confirmPassword}</p>}
 
         {/* CCCD */}
-        <label style={{ display: "block", marginTop: "10px" }}>CCCD</label>
+        <label>CCCD</label>
         <input
           type="text"
           name="cccd"
@@ -164,10 +182,10 @@ export default function RegistrationForm() {
           onChange={handleChange}
           style={{ borderColor: errors.cccd ? "red" : "#ccc", width: "100%" }}
         />
-        {errors.cccd && <p style={{ color: "red", fontSize: "12px" }}>{errors.cccd}</p>}
+        {errors.cccd && <p style={{ color: "red" }}>{errors.cccd}</p>}
 
         {/* License */}
-        <label style={{ display: "block", marginTop: "10px" }}>Giấy phép lái xe</label>
+        <label>Giấy phép lái xe</label>
         <input
           type="text"
           name="license"
@@ -175,53 +193,97 @@ export default function RegistrationForm() {
           onChange={handleChange}
           style={{ borderColor: errors.license ? "red" : "#ccc", width: "100%" }}
         />
-        {errors.license && <p style={{ color: "red", fontSize: "12px" }}>{errors.license}</p>}
+        {errors.license && <p style={{ color: "red" }}>{errors.license}</p>}
 
-        {/* CCCD File Upload */}
+        {/* CCCD Front */}
         <div style={{ marginTop: "10px" }}>
-          <button
-            type="button"
-            onClick={() => document.getElementById("cccdFileInput").click()}
-          >
-            Ảnh căn cước
+          <button type="button" onClick={() => document.getElementById("cccdFrontInput").click()}>
+            Ảnh CCCD (Mặt trước)
           </button>
           <input
-            id="cccdFileInput"
+            id="cccdFrontInput"
             type="file"
-            name="cccdFile"
+            name="cccdFront"
             accept="image/*"
             onChange={handleChange}
             style={{ display: "none" }}
           />
-          {formData.cccdFile && (
-            <span style={{ marginLeft: "10px" }}>{formData.cccdFile.name}</span>
-          )}
-          {errors.cccdFile && <p style={{ color: "red", fontSize: "12px" }}>{errors.cccdFile}</p>}
+          {formData.cccdFront && <span> {formData.cccdFront.name}</span>}
+          {errors.cccdFront && <p style={{ color: "red" }}>{errors.cccdFront}</p>}
         </div>
 
-        {/* License File Upload */}
+        {/* CCCD Back */}
         <div style={{ marginTop: "10px" }}>
-          <button
-            type="button"
-            onClick={() => document.getElementById("licenseFileInput").click()}
-          >
-            Ảnh bằng lái
+          <button type="button" onClick={() => document.getElementById("cccdBackInput").click()}>
+            Ảnh CCCD (Mặt sau)
           </button>
           <input
-            id="licenseFileInput"
+            id="cccdBackInput"
             type="file"
-            name="licenseFile"
+            name="cccdBack"
             accept="image/*"
             onChange={handleChange}
             style={{ display: "none" }}
           />
-          {formData.licenseFile && (
-            <span style={{ marginLeft: "10px" }}>{formData.licenseFile.name}</span>
-          )}
-          {errors.licenseFile && (
-            <p style={{ color: "red", fontSize: "12px" }}>{errors.licenseFile}</p>
-          )}
+          {formData.cccdBack && <span> {formData.cccdBack.name}</span>}
+          {errors.cccdBack && <p style={{ color: "red" }}>{errors.cccdBack}</p>}
         </div>
+
+        {/* License Front */}
+        <div style={{ marginTop: "10px" }}>
+          <button type="button" onClick={() => document.getElementById("licenseFrontInput").click()}>
+            Ảnh bằng lái (Mặt trước)
+          </button>
+          <input
+            id="licenseFrontInput"
+            type="file"
+            name="licenseFront"
+            accept="image/*"
+            onChange={handleChange}
+            style={{ display: "none" }}
+          />
+          {formData.licenseFront && <span> {formData.licenseFront.name}</span>}
+          {errors.licenseFront && <p style={{ color: "red" }}>{errors.licenseFront}</p>}
+        </div>
+
+        {/* License Back */}
+        <div style={{ marginTop: "10px" }}>
+          <button type="button" onClick={() => document.getElementById("licenseBackInput").click()}>
+            Ảnh bằng lái (Mặt sau)
+          </button>
+          <input
+            id="licenseBackInput"
+            type="file"
+            name="licenseBack"
+            accept="image/*"
+            onChange={handleChange}
+            style={{ display: "none" }}
+          />
+          {formData.licenseBack && <span> {formData.licenseBack.name}</span>}
+          {errors.licenseBack && <p style={{ color: "red" }}>{errors.licenseBack}</p>}
+        </div>
+
+        {/* Bank Name */}
+        <label style={{ marginTop: "10px", display: "block" }}>Tên ngân hàng</label>
+        <input
+          type="text"
+          name="bankName"
+          value={formData.bankName}
+          onChange={handleChange}
+          style={{ borderColor: errors.bankName ? "red" : "#ccc", width: "100%" }}
+        />
+        {errors.bankName && <p style={{ color: "red" }}>{errors.bankName}</p>}
+
+        {/* Bank Number */}
+        <label style={{ marginTop: "10px", display: "block" }}>Số tài khoản</label>
+        <input
+          type="text"
+          name="bankNumber"
+          value={formData.bankNumber}
+          onChange={handleChange}
+          style={{ borderColor: errors.bankNumber ? "red" : "#ccc", width: "100%" }}
+        />
+        {errors.bankNumber && <p style={{ color: "red" }}>{errors.bankNumber}</p>}
 
         {/* Buttons */}
         <div style={{ marginTop: "20px", display: "flex", gap: "10px" }}>
