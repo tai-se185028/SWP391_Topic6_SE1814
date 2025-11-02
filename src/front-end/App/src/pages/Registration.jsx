@@ -1,6 +1,9 @@
 import React, { useState } from "react";
+import { FaUpload, FaCheckCircle } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 export default function RegistrationForm() {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     fullName: "",
     phone: "",
@@ -14,7 +17,6 @@ export default function RegistrationForm() {
 
   const [errors, setErrors] = useState({});
 
-  // Validation rules (Vietnamese messages)
   const validateField = (name, value) => {
     let error = "";
     switch (name) {
@@ -79,6 +81,8 @@ export default function RegistrationForm() {
 
     if (Object.values(newErrors).every((err) => !err)) {
       console.log("Form data:", formData);
+      // Navigate to vehicles page after successful registration
+      navigate("/vehicles");
     }
   };
 
@@ -97,140 +101,214 @@ export default function RegistrationForm() {
   };
 
   return (
-    <div
-      style={{
-        width: "400px",
-        border: "1px solid #ccc",
-        borderRadius: "10px",
-        padding: "20px",
-        boxSizing: "border-box",
-      }}
-    >
-      <form onSubmit={handleSubmit} noValidate>
-        <h2>Đăng ký</h2>
+    <div className="min-h-screen bg-gradient-to-br from-primary-50 to-blue-100 flex items-center justify-center p-4">
+      <div className="w-full max-w-4xl">
+        <div className="card p-8 md:p-12">
+          {/* Header */}
+          <div className="text-center mb-8">
+            <h2 className="text-3xl font-bold text-gray-900 mb-2">Đăng ký tài khoản</h2>
+            <p className="text-gray-600">Vui lòng điền đầy đủ thông tin để tạo tài khoản</p>
+          </div>
 
-        {/* Full Name */}
-        <label style={{ display: "block", marginTop: "10px" }}>Họ tên</label>
-        <input
-          type="text"
-          name="fullName"
-          value={formData.fullName}
-          onChange={handleChange}
-          style={{ borderColor: errors.fullName ? "red" : "#ccc", width: "100%" }}
-        />
-        {errors.fullName && <p style={{ color: "red", fontSize: "12px" }}>{errors.fullName}</p>}
+          <form onSubmit={handleSubmit} noValidate>
+            <div className="grid md:grid-cols-2 gap-6">
+              {/* Left Column */}
+              <div className="space-y-5">
+                {/* Full Name */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Họ tên <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    name="fullName"
+                    value={formData.fullName}
+                    onChange={handleChange}
+                    className={`input-field ${errors.fullName ? "input-error" : ""}`}
+                    placeholder="Nhập họ và tên"
+                  />
+                  {errors.fullName && (
+                    <p className="text-red-500 text-sm mt-1">{errors.fullName}</p>
+                  )}
+                </div>
 
-        {/* Phone */}
-        <label style={{ display: "block", marginTop: "10px" }}>Số điện thoại</label>
-        <input
-          type="tel"
-          name="phone"
-          value={formData.phone}
-          onChange={handleChange}
-          style={{ borderColor: errors.phone ? "red" : "#ccc", width: "100%" }}
-        />
-        {errors.phone && <p style={{ color: "red", fontSize: "12px" }}>{errors.phone}</p>}
+                {/* Phone */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Số điện thoại <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="tel"
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleChange}
+                    className={`input-field ${errors.phone ? "input-error" : ""}`}
+                    placeholder="0123456789"
+                  />
+                  {errors.phone && (
+                    <p className="text-red-500 text-sm mt-1">{errors.phone}</p>
+                  )}
+                </div>
 
-        {/* Password */}
-        <label style={{ display: "block", marginTop: "10px" }}>Mật khẩu</label>
-        <input
-          type="password"
-          name="password"
-          value={formData.password}
-          onChange={handleChange}
-          style={{ borderColor: errors.password ? "red" : "#ccc", width: "100%" }}
-        />
-        {errors.password && <p style={{ color: "red", fontSize: "12px" }}>{errors.password}</p>}
+                {/* Password */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Mật khẩu <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="password"
+                    name="password"
+                    value={formData.password}
+                    onChange={handleChange}
+                    className={`input-field ${errors.password ? "input-error" : ""}`}
+                    placeholder="Tối thiểu 6 ký tự"
+                  />
+                  {errors.password && (
+                    <p className="text-red-500 text-sm mt-1">{errors.password}</p>
+                  )}
+                </div>
 
-        {/* Confirm Password */}
-        <label style={{ display: "block", marginTop: "10px" }}>Nhập lại mật khẩu</label>
-        <input
-          type="password"
-          name="confirmPassword"
-          value={formData.confirmPassword}
-          onChange={handleChange}
-          style={{ borderColor: errors.confirmPassword ? "red" : "#ccc", width: "100%" }}
-        />
-        {errors.confirmPassword && (
-          <p style={{ color: "red", fontSize: "12px" }}>{errors.confirmPassword}</p>
-        )}
+                {/* Confirm Password */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Nhập lại mật khẩu <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="password"
+                    name="confirmPassword"
+                    value={formData.confirmPassword}
+                    onChange={handleChange}
+                    className={`input-field ${errors.confirmPassword ? "input-error" : ""}`}
+                    placeholder="Nhập lại mật khẩu"
+                  />
+                  {errors.confirmPassword && (
+                    <p className="text-red-500 text-sm mt-1">{errors.confirmPassword}</p>
+                  )}
+                </div>
+              </div>
 
-        {/* CCCD */}
-        <label style={{ display: "block", marginTop: "10px" }}>CCCD</label>
-        <input
-          type="text"
-          name="cccd"
-          value={formData.cccd}
-          onChange={handleChange}
-          style={{ borderColor: errors.cccd ? "red" : "#ccc", width: "100%" }}
-        />
-        {errors.cccd && <p style={{ color: "red", fontSize: "12px" }}>{errors.cccd}</p>}
+              {/* Right Column */}
+              <div className="space-y-5">
+                {/* CCCD */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Số CCCD <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    name="cccd"
+                    value={formData.cccd}
+                    onChange={handleChange}
+                    className={`input-field ${errors.cccd ? "input-error" : ""}`}
+                    placeholder="12 chữ số"
+                  />
+                  {errors.cccd && (
+                    <p className="text-red-500 text-sm mt-1">{errors.cccd}</p>
+                  )}
+                </div>
 
-        {/* License */}
-        <label style={{ display: "block", marginTop: "10px" }}>Giấy phép lái xe</label>
-        <input
-          type="text"
-          name="license"
-          value={formData.license}
-          onChange={handleChange}
-          style={{ borderColor: errors.license ? "red" : "#ccc", width: "100%" }}
-        />
-        {errors.license && <p style={{ color: "red", fontSize: "12px" }}>{errors.license}</p>}
+                {/* License */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Giấy phép lái xe <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    name="license"
+                    value={formData.license}
+                    onChange={handleChange}
+                    className={`input-field ${errors.license ? "input-error" : ""}`}
+                    placeholder="Số giấy phép lái xe"
+                  />
+                  {errors.license && (
+                    <p className="text-red-500 text-sm mt-1">{errors.license}</p>
+                  )}
+                </div>
 
-        {/* CCCD File Upload */}
-        <div style={{ marginTop: "10px" }}>
-          <button
-            type="button"
-            onClick={() => document.getElementById("cccdFileInput").click()}
-          >
-            Ảnh căn cước
-          </button>
-          <input
-            id="cccdFileInput"
-            type="file"
-            name="cccdFile"
-            accept="image/*"
-            onChange={handleChange}
-            style={{ display: "none" }}
-          />
-          {formData.cccdFile && (
-            <span style={{ marginLeft: "10px" }}>{formData.cccdFile.name}</span>
-          )}
-          {errors.cccdFile && <p style={{ color: "red", fontSize: "12px" }}>{errors.cccdFile}</p>}
+                {/* CCCD File Upload */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Ảnh căn cước <span className="text-red-500">*</span>
+                  </label>
+                  <button
+                    type="button"
+                    onClick={() => document.getElementById("cccdFileInput").click()}
+                    className="w-full flex items-center justify-center space-x-2 px-4 py-3 border-2 border-dashed border-gray-300 rounded-lg hover:border-primary-500 hover:bg-primary-50 transition-all duration-200"
+                  >
+                    {formData.cccdFile ? (
+                      <>
+                        <FaCheckCircle className="text-green-500" />
+                        <span className="text-sm text-gray-700">{formData.cccdFile.name}</span>
+                      </>
+                    ) : (
+                      <>
+                        <FaUpload className="text-gray-400" />
+                        <span className="text-sm text-gray-600">Tải lên ảnh căn cước</span>
+                      </>
+                    )}
+                  </button>
+                  <input
+                    id="cccdFileInput"
+                    type="file"
+                    name="cccdFile"
+                    accept="image/*"
+                    onChange={handleChange}
+                    className="hidden"
+                  />
+                  {errors.cccdFile && (
+                    <p className="text-red-500 text-sm mt-1">{errors.cccdFile}</p>
+                  )}
+                </div>
+
+                {/* License File Upload */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Ảnh bằng lái <span className="text-red-500">*</span>
+                  </label>
+                  <button
+                    type="button"
+                    onClick={() => document.getElementById("licenseFileInput").click()}
+                    className="w-full flex items-center justify-center space-x-2 px-4 py-3 border-2 border-dashed border-gray-300 rounded-lg hover:border-primary-500 hover:bg-primary-50 transition-all duration-200"
+                  >
+                    {formData.licenseFile ? (
+                      <>
+                        <FaCheckCircle className="text-green-500" />
+                        <span className="text-sm text-gray-700">{formData.licenseFile.name}</span>
+                      </>
+                    ) : (
+                      <>
+                        <FaUpload className="text-gray-400" />
+                        <span className="text-sm text-gray-600">Tải lên ảnh bằng lái</span>
+                      </>
+                    )}
+                  </button>
+                  <input
+                    id="licenseFileInput"
+                    type="file"
+                    name="licenseFile"
+                    accept="image/*"
+                    onChange={handleChange}
+                    className="hidden"
+                  />
+                  {errors.licenseFile && (
+                    <p className="text-red-500 text-sm mt-1">{errors.licenseFile}</p>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {/* Buttons */}
+            <div className="flex flex-col sm:flex-row gap-4 mt-8">
+              <button type="submit" className="btn-primary flex-1">
+                Đăng ký
+              </button>
+              <button type="button" onClick={handleCancel} className="btn-secondary flex-1">
+                Hủy
+              </button>
+            </div>
+          </form>
         </div>
-
-        {/* License File Upload */}
-        <div style={{ marginTop: "10px" }}>
-          <button
-            type="button"
-            onClick={() => document.getElementById("licenseFileInput").click()}
-          >
-            Ảnh bằng lái
-          </button>
-          <input
-            id="licenseFileInput"
-            type="file"
-            name="licenseFile"
-            accept="image/*"
-            onChange={handleChange}
-            style={{ display: "none" }}
-          />
-          {formData.licenseFile && (
-            <span style={{ marginLeft: "10px" }}>{formData.licenseFile.name}</span>
-          )}
-          {errors.licenseFile && (
-            <p style={{ color: "red", fontSize: "12px" }}>{errors.licenseFile}</p>
-          )}
-        </div>
-
-        {/* Buttons */}
-        <div style={{ marginTop: "20px", display: "flex", gap: "10px" }}>
-          <button type="submit">Đăng ký</button>
-          <button type="button" onClick={handleCancel}>
-            Hủy
-          </button>
-        </div>
-      </form>
+      </div>
     </div>
   );
 }
