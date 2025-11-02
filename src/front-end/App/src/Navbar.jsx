@@ -1,43 +1,124 @@
-import React from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { FaUserCircle } from "react-icons/fa";
+import React, { useState } from "react";
+import { Link, NavLink, useNavigate } from "react-router-dom";
+import { FaUserCircle, FaBars, FaTimes } from "react-icons/fa";
 
 export default function Navbar({ username }) {
+    const [menuOpen, setMenuOpen] = useState(false);
     const navigate = useNavigate();
 
     const handleProfileClick = () => {
         navigate("/profile");
     };
 
-    return (
-        <nav className="flex items-center justify-between bg-gray-900 px-6 py-3 text-white">
-            {/* Left Side Menu */}
-            <div className="flex space-x-6">
-                <Link to="/vehicles" className="hover:text-gray-300">
-                    Xe của bạn
-                </Link>
-                <Link to="/schedule" className="hover:text-gray-300">
-                    Đặt lịch
-                </Link>
-                <Link to="/usageHistory" className="hover:text-gray-300">
-                    Lịch sử
-                </Link>
-                <Link to="/notifycaition" className="hover:text-gray-300">
-                    Thông báo
-                </Link>
-                <Link to="/support" className="hover:text-gray-300">
-                    Hỗ trợ
-                </Link>
-            </div>
+    const toggleMenu = () => {
+        setMenuOpen(!menuOpen);
+    };
 
-            {/* User Box */}
-            <div
-                className="flex items-center space-x-2 cursor-pointer hover:text-gray-300"
-                onClick={handleProfileClick}
-            >
-                <FaUserCircle size={28} />
-                <span>{username}</span>
-            </div>
-        </nav>
+    return (
+        <>
+            <nav className="Navbar">
+                <div className="color-box">
+                    VEHICLE
+                </div>
+
+                <div className="menu-btn" onClick={toggleMenu}>
+                    <FaBars />
+                </div>
+
+                <div className="nvbr-main">
+                    <div className="navigate">
+                        <NavLink 
+                            to="/vehicles" 
+                            className={({ isActive }) => isActive ? "active" : ""}
+                        >
+                            Xe của bạn
+                        </NavLink>
+                        <NavLink 
+                            to="/schedule" 
+                            className={({ isActive }) => isActive ? "active" : ""}
+                        >
+                            Đặt lịch
+                        </NavLink>
+                        <NavLink 
+                            to="/usageHistory" 
+                            className={({ isActive }) => isActive ? "active" : ""}
+                        >
+                            Lịch sử
+                        </NavLink>
+                        <NavLink 
+                            to="/notification" 
+                            className={({ isActive }) => isActive ? "active" : ""}
+                        >
+                            Thông báo
+                        </NavLink>
+                        <NavLink 
+                            to="/support" 
+                            className={({ isActive }) => isActive ? "active" : ""}
+                        >
+                            Hỗ trợ
+                        </NavLink>
+                    </div>
+
+                    <div
+                        className="username"
+                        onClick={handleProfileClick}
+                        style={{ cursor: 'pointer' }}
+                    >
+                        <FaUserCircle size={24} />
+                        <span>{username}</span>
+                    </div>
+                </div>
+            </nav>
+
+            {menuOpen && (
+                <div className="nvbr-overlay">
+                    <div 
+                        style={{ 
+                            position: 'absolute', 
+                            top: '20px', 
+                            right: '20px',
+                            cursor: 'pointer',
+                            fontSize: '28px'
+                        }}
+                        onClick={toggleMenu}
+                    >
+                        <FaTimes />
+                    </div>
+                    
+                    <NavLink to="/vehicles" onClick={toggleMenu}>
+                        Xe của bạn
+                    </NavLink>
+                    <NavLink to="/schedule" onClick={toggleMenu}>
+                        Đặt lịch
+                    </NavLink>
+                    <NavLink to="/usageHistory" onClick={toggleMenu}>
+                        Lịch sử
+                    </NavLink>
+                    <NavLink to="/notification" onClick={toggleMenu}>
+                        Thông báo
+                    </NavLink>
+                    <NavLink to="/support" onClick={toggleMenu}>
+                        Hỗ trợ
+                    </NavLink>
+                    
+                    <div
+                        style={{
+                            marginTop: '40px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '10px',
+                            cursor: 'pointer'
+                        }}
+                        onClick={() => {
+                            handleProfileClick();
+                            toggleMenu();
+                        }}
+                    >
+                        <FaUserCircle size={24} />
+                        <span>{username}</span>
+                    </div>
+                </div>
+            )}
+        </>
     );
 }

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 export default function RegistrationForm() {
   const [formData, setFormData] = useState({
@@ -79,6 +80,7 @@ export default function RegistrationForm() {
 
     if (Object.values(newErrors).every((err) => !err)) {
       console.log("Form data:", formData);
+      alert("Đăng ký thành công!");
     }
   };
 
@@ -97,140 +99,292 @@ export default function RegistrationForm() {
   };
 
   return (
-    <div
-      style={{
-        width: "400px",
-        border: "1px solid #ccc",
-        borderRadius: "10px",
-        padding: "20px",
-        boxSizing: "border-box",
-      }}
-    >
-      <form onSubmit={handleSubmit} noValidate>
-        <h2>Đăng ký</h2>
+    <div style={{
+      minHeight: '100vh',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      background: 'linear-gradient(135deg, #f5f7fa 0%, #e8eef5 100%)',
+      padding: '20px'
+    }}>
+      <div
+        style={{
+          width: '100%',
+          maxWidth: '500px',
+          background: '#ffffff',
+          border: '1px solid #e5e7eb',
+          borderRadius: '16px',
+          padding: '32px',
+          boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+        }}
+      >
+        <form onSubmit={handleSubmit} noValidate>
+          <h2 style={{
+            fontSize: '28px',
+            fontWeight: '700',
+            color: '#111827',
+            marginBottom: '24px',
+            textAlign: 'center'
+          }}>Đăng ký</h2>
 
-        {/* Full Name */}
-        <label style={{ display: "block", marginTop: "10px" }}>Họ tên</label>
-        <input
-          type="text"
-          name="fullName"
-          value={formData.fullName}
-          onChange={handleChange}
-          style={{ borderColor: errors.fullName ? "red" : "#ccc", width: "100%" }}
-        />
-        {errors.fullName && <p style={{ color: "red", fontSize: "12px" }}>{errors.fullName}</p>}
+          {/* Full Name */}
+          <div style={{ marginBottom: '16px' }}>
+            <label style={{ 
+              display: 'block', 
+              marginBottom: '8px',
+              fontSize: '14px',
+              fontWeight: '600',
+              color: '#374151'
+            }}>Họ tên</label>
+            <input
+              type="text"
+              name="fullName"
+              value={formData.fullName}
+              onChange={handleChange}
+              className="txtInput"
+              style={{ 
+                borderColor: errors.fullName ? '#dc2626' : '#d1d5db',
+                margin: 0
+              }}
+            />
+            {errors.fullName && <p style={{ color: '#dc2626', fontSize: '12px', marginTop: '4px' }}>{errors.fullName}</p>}
+          </div>
 
-        {/* Phone */}
-        <label style={{ display: "block", marginTop: "10px" }}>Số điện thoại</label>
-        <input
-          type="tel"
-          name="phone"
-          value={formData.phone}
-          onChange={handleChange}
-          style={{ borderColor: errors.phone ? "red" : "#ccc", width: "100%" }}
-        />
-        {errors.phone && <p style={{ color: "red", fontSize: "12px" }}>{errors.phone}</p>}
+          {/* Phone */}
+          <div style={{ marginBottom: '16px' }}>
+            <label style={{ 
+              display: 'block', 
+              marginBottom: '8px',
+              fontSize: '14px',
+              fontWeight: '600',
+              color: '#374151'
+            }}>Số điện thoại</label>
+            <input
+              type="tel"
+              name="phone"
+              value={formData.phone}
+              onChange={handleChange}
+              className="txtInput"
+              style={{ 
+                borderColor: errors.phone ? '#dc2626' : '#d1d5db',
+                margin: 0
+              }}
+            />
+            {errors.phone && <p style={{ color: '#dc2626', fontSize: '12px', marginTop: '4px' }}>{errors.phone}</p>}
+          </div>
 
-        {/* Password */}
-        <label style={{ display: "block", marginTop: "10px" }}>Mật khẩu</label>
-        <input
-          type="password"
-          name="password"
-          value={formData.password}
-          onChange={handleChange}
-          style={{ borderColor: errors.password ? "red" : "#ccc", width: "100%" }}
-        />
-        {errors.password && <p style={{ color: "red", fontSize: "12px" }}>{errors.password}</p>}
+          {/* Password */}
+          <div style={{ marginBottom: '16px' }}>
+            <label style={{ 
+              display: 'block', 
+              marginBottom: '8px',
+              fontSize: '14px',
+              fontWeight: '600',
+              color: '#374151'
+            }}>Mật khẩu</label>
+            <input
+              type="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              className="txtInput"
+              style={{ 
+                borderColor: errors.password ? '#dc2626' : '#d1d5db',
+                margin: 0
+              }}
+            />
+            {errors.password && <p style={{ color: '#dc2626', fontSize: '12px', marginTop: '4px' }}>{errors.password}</p>}
+          </div>
 
-        {/* Confirm Password */}
-        <label style={{ display: "block", marginTop: "10px" }}>Nhập lại mật khẩu</label>
-        <input
-          type="password"
-          name="confirmPassword"
-          value={formData.confirmPassword}
-          onChange={handleChange}
-          style={{ borderColor: errors.confirmPassword ? "red" : "#ccc", width: "100%" }}
-        />
-        {errors.confirmPassword && (
-          <p style={{ color: "red", fontSize: "12px" }}>{errors.confirmPassword}</p>
-        )}
+          {/* Confirm Password */}
+          <div style={{ marginBottom: '16px' }}>
+            <label style={{ 
+              display: 'block', 
+              marginBottom: '8px',
+              fontSize: '14px',
+              fontWeight: '600',
+              color: '#374151'
+            }}>Nhập lại mật khẩu</label>
+            <input
+              type="password"
+              name="confirmPassword"
+              value={formData.confirmPassword}
+              onChange={handleChange}
+              className="txtInput"
+              style={{ 
+                borderColor: errors.confirmPassword ? '#dc2626' : '#d1d5db',
+                margin: 0
+              }}
+            />
+            {errors.confirmPassword && (
+              <p style={{ color: '#dc2626', fontSize: '12px', marginTop: '4px' }}>{errors.confirmPassword}</p>
+            )}
+          </div>
 
-        {/* CCCD */}
-        <label style={{ display: "block", marginTop: "10px" }}>CCCD</label>
-        <input
-          type="text"
-          name="cccd"
-          value={formData.cccd}
-          onChange={handleChange}
-          style={{ borderColor: errors.cccd ? "red" : "#ccc", width: "100%" }}
-        />
-        {errors.cccd && <p style={{ color: "red", fontSize: "12px" }}>{errors.cccd}</p>}
+          {/* CCCD */}
+          <div style={{ marginBottom: '16px' }}>
+            <label style={{ 
+              display: 'block', 
+              marginBottom: '8px',
+              fontSize: '14px',
+              fontWeight: '600',
+              color: '#374151'
+            }}>CCCD</label>
+            <input
+              type="text"
+              name="cccd"
+              value={formData.cccd}
+              onChange={handleChange}
+              className="txtInput"
+              style={{ 
+                borderColor: errors.cccd ? '#dc2626' : '#d1d5db',
+                margin: 0
+              }}
+            />
+            {errors.cccd && <p style={{ color: '#dc2626', fontSize: '12px', marginTop: '4px' }}>{errors.cccd}</p>}
+          </div>
 
-        {/* License */}
-        <label style={{ display: "block", marginTop: "10px" }}>Giấy phép lái xe</label>
-        <input
-          type="text"
-          name="license"
-          value={formData.license}
-          onChange={handleChange}
-          style={{ borderColor: errors.license ? "red" : "#ccc", width: "100%" }}
-        />
-        {errors.license && <p style={{ color: "red", fontSize: "12px" }}>{errors.license}</p>}
+          {/* License */}
+          <div style={{ marginBottom: '16px' }}>
+            <label style={{ 
+              display: 'block', 
+              marginBottom: '8px',
+              fontSize: '14px',
+              fontWeight: '600',
+              color: '#374151'
+            }}>Giấy phép lái xe</label>
+            <input
+              type="text"
+              name="license"
+              value={formData.license}
+              onChange={handleChange}
+              className="txtInput"
+              style={{ 
+                borderColor: errors.license ? '#dc2626' : '#d1d5db',
+                margin: 0
+              }}
+            />
+            {errors.license && <p style={{ color: '#dc2626', fontSize: '12px', marginTop: '4px' }}>{errors.license}</p>}
+          </div>
 
-        {/* CCCD File Upload */}
-        <div style={{ marginTop: "10px" }}>
-          <button
-            type="button"
-            onClick={() => document.getElementById("cccdFileInput").click()}
-          >
-            Ảnh căn cước
-          </button>
-          <input
-            id="cccdFileInput"
-            type="file"
-            name="cccdFile"
-            accept="image/*"
-            onChange={handleChange}
-            style={{ display: "none" }}
-          />
-          {formData.cccdFile && (
-            <span style={{ marginLeft: "10px" }}>{formData.cccdFile.name}</span>
-          )}
-          {errors.cccdFile && <p style={{ color: "red", fontSize: "12px" }}>{errors.cccdFile}</p>}
-        </div>
+          {/* CCCD File Upload */}
+          <div style={{ marginBottom: '16px' }}>
+            <label style={{ 
+              display: 'block', 
+              marginBottom: '8px',
+              fontSize: '14px',
+              fontWeight: '600',
+              color: '#374151'
+            }}>Ảnh căn cước</label>
+            <button
+              type="button"
+              onClick={() => document.getElementById("cccdFileInput").click()}
+              style={{
+                padding: '10px 20px',
+                backgroundColor: '#f3f4f6',
+                border: '1px solid #d1d5db',
+                borderRadius: '8px',
+                cursor: 'pointer',
+                fontSize: '14px',
+                fontWeight: '500',
+                color: '#374151'
+              }}
+            >
+              Chọn file
+            </button>
+            <input
+              id="cccdFileInput"
+              type="file"
+              name="cccdFile"
+              accept="image/*"
+              onChange={handleChange}
+              style={{ display: "none" }}
+            />
+            {formData.cccdFile && (
+              <span style={{ marginLeft: "10px", fontSize: '14px', color: '#6b7280' }}>{formData.cccdFile.name}</span>
+            )}
+            {errors.cccdFile && <p style={{ color: '#dc2626', fontSize: '12px', marginTop: '4px' }}>{errors.cccdFile}</p>}
+          </div>
 
-        {/* License File Upload */}
-        <div style={{ marginTop: "10px" }}>
-          <button
-            type="button"
-            onClick={() => document.getElementById("licenseFileInput").click()}
-          >
-            Ảnh bằng lái
-          </button>
-          <input
-            id="licenseFileInput"
-            type="file"
-            name="licenseFile"
-            accept="image/*"
-            onChange={handleChange}
-            style={{ display: "none" }}
-          />
-          {formData.licenseFile && (
-            <span style={{ marginLeft: "10px" }}>{formData.licenseFile.name}</span>
-          )}
-          {errors.licenseFile && (
-            <p style={{ color: "red", fontSize: "12px" }}>{errors.licenseFile}</p>
-          )}
-        </div>
+          {/* License File Upload */}
+          <div style={{ marginBottom: '24px' }}>
+            <label style={{ 
+              display: 'block', 
+              marginBottom: '8px',
+              fontSize: '14px',
+              fontWeight: '600',
+              color: '#374151'
+            }}>Ảnh bằng lái</label>
+            <button
+              type="button"
+              onClick={() => document.getElementById("licenseFileInput").click()}
+              style={{
+                padding: '10px 20px',
+                backgroundColor: '#f3f4f6',
+                border: '1px solid #d1d5db',
+                borderRadius: '8px',
+                cursor: 'pointer',
+                fontSize: '14px',
+                fontWeight: '500',
+                color: '#374151'
+              }}
+            >
+              Chọn file
+            </button>
+            <input
+              id="licenseFileInput"
+              type="file"
+              name="licenseFile"
+              accept="image/*"
+              onChange={handleChange}
+              style={{ display: "none" }}
+            />
+            {formData.licenseFile && (
+              <span style={{ marginLeft: "10px", fontSize: '14px', color: '#6b7280' }}>{formData.licenseFile.name}</span>
+            )}
+            {errors.licenseFile && (
+              <p style={{ color: '#dc2626', fontSize: '12px', marginTop: '4px' }}>{errors.licenseFile}</p>
+            )}
+          </div>
 
-        {/* Buttons */}
-        <div style={{ marginTop: "20px", display: "flex", gap: "10px" }}>
-          <button type="submit">Đăng ký</button>
-          <button type="button" onClick={handleCancel}>
-            Hủy
-          </button>
-        </div>
-      </form>
+          {/* Buttons */}
+          <div style={{ display: 'flex', gap: '12px', marginTop: '24px' }}>
+            <button 
+              type="submit"
+              className="btnInput"
+              style={{ flex: 1 }}
+            >
+              Đăng ký
+            </button>
+            <button 
+              type="button" 
+              onClick={handleCancel}
+              style={{
+                flex: 1,
+                padding: '12px 24px',
+                backgroundColor: '#f3f4f6',
+                border: '1px solid #d1d5db',
+                borderRadius: '8px',
+                color: '#374151',
+                fontWeight: '600',
+                cursor: 'pointer',
+                transition: 'all 0.2s ease'
+              }}
+            >
+              Hủy
+            </button>
+          </div>
+
+          <div style={{ 
+            marginTop: '20px', 
+            textAlign: 'center',
+            fontSize: '14px',
+            color: '#6b7280'
+          }}>
+            Đã có tài khoản? <Link to="/vehicles" style={{ color: '#2563eb', fontWeight: '600' }}>Đăng nhập</Link>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }
